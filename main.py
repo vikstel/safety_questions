@@ -12,11 +12,11 @@ dp = Dispatcher()
 
 @dp.message(Command(commands=['start']))
 async def start_commands(message: Message):
-    random_number = random.choices([i for i in range(1, 89)], k=10)
+    random_number = random.choices([i for i in range(1, 34)], k=10)
     for num in random_number:
-        with sqlite3.connect('questions.db') as con:
+        with sqlite3.connect('morning_questions.db') as con:
             cur = con.cursor()
-            cur.execute("""SELECT question, answer FROM question WHERE id = (?)""", (num,))
+            cur.execute("""SELECT question, answer FROM questions WHERE id = (?)""", (num,))
             text_fetchall = cur.fetchall()
             text_to_answer = f'<b>{text_fetchall[0][0]}</b>\n' \
                              f'{text_fetchall[0][1]}'
